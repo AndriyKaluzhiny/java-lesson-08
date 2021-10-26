@@ -16,7 +16,7 @@ public class Application {
         System.out.println("If you want to exit, please type 0");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws WrongInputConsoleParametersException {
         Month [] monthsValues = Month.values();
         Season [] s = Season.values();
         menu();
@@ -25,8 +25,9 @@ public class Application {
         String input = sc.next();
 
 
-        switch (input) {
 
+
+        switch (input) {
             case "0":
                 System.exit(1);
 
@@ -42,9 +43,9 @@ public class Application {
                     }
                 }
                 if (!flag) {
-                    System.out.println("Month doesn't exists!");
-                    break;
+                    throw new WrongInputConsoleParametersException(monthInput);
                 }
+                break;
             }
 
             case "2": {
@@ -69,8 +70,9 @@ public class Application {
                     }
                 }
                 if (!flag) {
-                    System.out.println("Doesn't exists!");
+                    throw new WrongInputConsoleParametersException(monthInput);
                 }
+                break;
             }
 
             case "3": {
@@ -95,7 +97,7 @@ public class Application {
                 }
 
                 if (!flag) {
-                    System.out.println("Doesn't exists!");
+                    throw new WrongInputConsoleParametersException(sc3Input);
                 }
                 break;
             }
@@ -104,16 +106,20 @@ public class Application {
                 for (Month mon : monthsValues) {
                     if (mon.getDays() - 31 < 0) {
                         System.out.println(mon + " " + "Days: " + mon.getDays());
+                        break;
                     }
                 }
+                break;
             }
 
             case "5": {
                 for (Month mon : monthsValues) {
                     if (mon.getDays() + 31 > 61) {
                         System.out.println(mon + " " + "Days: " + mon.getDays());
+                        break;
                     }
                 }
+                break;
             }
 
             case "6": {
@@ -137,7 +143,12 @@ public class Application {
                          System.out.println(monthsValues[ordinal]);
                      } else {
                          System.out.println(monthsValues[ordinal + 1]);
+                         break;
                      }
+                }
+
+                if (!flag) {
+                    throw new WrongInputConsoleParametersException(sc4Input);
                 }
             }
 
@@ -150,6 +161,7 @@ public class Application {
                 for (Month mon : monthsValues) {
                     if (mon.name().equalsIgnoreCase(sc4Input)) {
                         flag = true;
+                        break;
                     }
                 }
 
@@ -162,7 +174,11 @@ public class Application {
                         System.out.println(monthsValues[ordinal]);
                     } else {
                         System.out.println(monthsValues[ordinal - 1]);
+                        break;
                     }
+                }
+                if (!flag) {
+                    throw new WrongInputConsoleParametersException(sc4Input);
                 }
             }
 
@@ -186,24 +202,29 @@ public class Application {
                 System.out.println("Enter month: ");
                 Scanner sc10 = new Scanner(System.in);
 
-                String scInput = sc10.next().toUpperCase();
+                String sc10Input= sc10.next().toUpperCase();
                 boolean flag = false;
 
                 for (Month mon : monthsValues) {
-                    if (mon.name().equalsIgnoreCase(scInput))
+                    if (mon.name().equalsIgnoreCase(sc10Input))
                         flag = true;
+                    else
+                        throw new WrongInputConsoleParametersException(sc10Input);
                 }
 
                 if (flag) {
-                    Month m = Month.valueOf(scInput);
+                    Month m = Month.valueOf(sc10Input);
 
                     if (m.getDays() % 2 == 0) {
                         System.out.println("Pair " + m);
                     } else {
                         System.out.println("Unpair");
+                        break;
                     }
                 }
             }
+            default:
+                throw new WrongInputConsoleParametersException(input);
         }
     }
 }
