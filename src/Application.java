@@ -1,5 +1,11 @@
 import java.util.Scanner;
 
+/**
+ * @params sc, sc7, sc10Input, sc4Input, sc3, sc4, sc3Input
+ * @exception WrongInputConsoleParametersException
+ * @author Andriy Kaluzhniy
+ */
+
 public class Application {
 
     public static void menu() {
@@ -17,6 +23,7 @@ public class Application {
     }
 
     public static void main(String[] args) throws WrongInputConsoleParametersException {
+
         Month [] monthsValues = Month.values();
         Season [] s = Season.values();
         menu();
